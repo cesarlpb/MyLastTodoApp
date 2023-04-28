@@ -9,67 +9,67 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
-<style>
-    h1, h2, p, a, label {
-    color: #fff;
-    }
-    .card {
-    border: none;
-    margin-bottom: 20px;
-    min-height: 250px;
-    }
-    .text-primary-emphasis{
-        color: #052c65;
-    }
-    .text-secondary-emphasis{
-        color: #2b2f32;
-    }
-    .text-success-emphasis{
-        color: #0a3622;
-    }
-    .text-danger-emphasis{
-        color: #58151c;
-    }
-    .text-warning-emphasis{
-        color: #664d03,
-    }
-    .text-info-emphasis{
-        color: #055160;
-    }
-    .text-light-emphasis{
-        color: #495057;
-    }
-    .text-dark{
-        color: rgba(33,37,41,1)!important;
-    }
-    .text-dark-emphasis{
-        color: #495057;
-    }
-    .text-body{
-        color: rgba(33,37,41,1)!important;
-    }
-    .text-body-emphasis{
-        color: #000;
-    }
-    .text-body-secondary{
-        color: rgba(33, 37, 41, 0.75);
-    }
-    .text-body-tertiary{
-        color: rgba(33, 37, 41, 0.5);
-    }
-    .text-black{
-        color: rgba(0,0,0,1)!important;
-    }
-    .text-white{
-        color:rgba(255, 255, 255, 1)!important;
-    }
-    .text-black-50{
-        color: rgba(0,0,0,.5)!important;
-    }
-    .text-white-50{
-        color: rgba(255,255,255,.5)!important;
-    }
-</style>
+  <style>
+      h1, h2, p, a, label {
+      color: #fff;
+      }
+      .card {
+      border: none;
+      margin-bottom: 20px;
+      min-height: 250px;
+      }
+      .text-primary-emphasis{
+          color: #052c65;
+      }
+      .text-secondary-emphasis{
+          color: #2b2f32;
+      }
+      .text-success-emphasis{
+          color: #0a3622;
+      }
+      .text-danger-emphasis{
+          color: #58151c;
+      }
+      .text-warning-emphasis{
+          color: #664d03,
+      }
+      .text-info-emphasis{
+          color: #055160;
+      }
+      .text-light-emphasis{
+          color: #495057;
+      }
+      .text-dark{
+          color: rgba(33,37,41,1)!important;
+      }
+      .text-dark-emphasis{
+          color: #495057;
+      }
+      .text-body{
+          color: rgba(33,37,41,1)!important;
+      }
+      .text-body-emphasis{
+          color: #000;
+      }
+      .text-body-secondary{
+          color: rgba(33, 37, 41, 0.75);
+      }
+      .text-body-tertiary{
+          color: rgba(33, 37, 41, 0.5);
+      }
+      .text-black{
+          color: rgba(0,0,0,1)!important;
+      }
+      .text-white{
+          color:rgba(255, 255, 255, 1)!important;
+      }
+      .text-black-50{
+          color: rgba(0,0,0,.5)!important;
+      }
+      .text-white-50{
+          color: rgba(255,255,255,.5)!important;
+      }
+  </style>
 </head>
 <body class="bg bg-dark">
   <div class="container col-8">
@@ -136,94 +136,6 @@
         $('#fecha').val(año + '-' + mes + '-' + dia);
     }
 
-    // Función para cargar los to-dos desde localStorage
-    /*function cargarTodos() {
-      // Obtener los to-dos almacenados en localStorage
-      var todos = JSON.parse(localStorage.getItem('todos')) || [];
-  
-      // Generar el HTML de las cards con los to-dos
-      var html = '';
-      for (var i = 0; i < todos.length; i++) {
-        var todo = todos[i];
-        html += '<div class="col">';
-        html += '  <div class="card';
-        if (todo.completed) {
-          html += ' text-muted" style="text-decoration: line-through;';
-        } else {
-          html += '"';
-        }
-        html += '>';
-        html += '    <div class="card-body">';
-        html += '      <h5 class="card-title">' + todo.titulo + '</h5>';
-        html += '      <p class="card-text">' + todo.descripcion + '</p>';
-        html += '      <p class="card-text"><small class="text-muted">' + todo.fecha + '</small></p>';
-        html += '      <button type="button" class="btn btn-secondary completado">' + (todo.completed ? 'Completado' : 'Marcar como completado') + '</button>';
-        html += '      <button type="button" class="btn btn-danger eliminar">Eliminar</button>';
-        html += '    </div>';
-        html += '  </div>';
-        html += '</div>';
-      }
-  
-      // Insertar el HTML generado en el grid de to-dos
-      $('#todos-grid').html(html);
-  
-      // Escuchar el evento click del botón "Agregar"
-      $('form').submit(function(event) {
-        event.preventDefault();
-  
-        // Obtener los valores del formulario
-        var titulo = $('#titulo').val();
-        var fecha = $('#fecha').val();
-        var descripcion = $('#descripcion').val();
-  
-        // Crear un nuevo to-do y guardarlo en localStorage
-        var todo = {
-          titulo: titulo,
-          fecha: fecha,
-          descripcion: descripcion,
-          completed: false
-        };
-        todos.push(todo);
-        localStorage.setItem('todos', JSON.stringify(todos));
-  
-        // Cargar de nuevo los to-dos para actualizar la interfaz
-        cargarTodos();
-  
-        // Limpiar los campos del formulario
-        $('#titulo').val('');
-        $('#fecha').val('');
-        $('#descripcion').val('');
-      });
-  
-      // Escuchar el evento click del botón "Completado"
-      $('.completado').click(function() {
-        // Obtener el índice del to-do correspondiente
-        var index = $(this).parents('.card').index();
-  
-        // Marcar como completado el to-do correspondiente en localStorage
-        todos[index].completed = true;
-        localStorage.setItem('todos', JSON.stringify(todos));
-  
-        // Actualizar la card en la interfaz
-        $(this).parents('.card').addClass('text-muted').css('text-decoration', 'line-through');
-      });
-  
-      // Escuchar el evento click del botón "Eliminar"
-      $('.eliminar').click(function() {
-        // Obtener el índice del to-do correspondiente
-        var index = $(this).parents('.card').index();
-  
-        // Eliminar el to-do correspondiente de localStorage
-        todos.splice(index, 1);
-        localStorage.setItem('todos', JSON.stringify(todos));
-  
-        // Eliminar la card correspondiente de la interfaz
-        $(this).parents('.col').remove();
-      });
-    }
-    */
-    
-    // v2
     function cargarTodos() {
     // Obtener los to-dos almacenados en localStorage
     var todos = JSON.parse(localStorage.getItem('todos')) || [];
@@ -275,9 +187,6 @@
         html += '      <p class="card-text text-secondary-emphasis ">' + todo.descripcion + '</p>';
         html += '      <p class="card-text"><small class="' + (todo.prioridad == "muy-alta" ? "text-white" : "text-dark") + '">' + todo.fecha + '</small></p>';
         html += '      <button type="button" class="btn btn-secondary border-white completado">' + (todo.completed ? 'Desmarcar completado' : 'Marcar como completado') + '</button>';
-        // if(todo.completed) {
-        // html += '      <button type="button" class="btn btn-warning descompletar">Marcar como no completado</button>';
-        // }
         html += '      <button type="button" class="btn btn-danger eliminar">Eliminar</button>';
         html += '    </div>';
         html += '  </div>';
@@ -327,14 +236,6 @@
     todos[index].completed = !todos[index].completed;
     localStorage.setItem('todos', JSON.stringify(todos));
 
-    // Actualizar la card en la interfaz
-    // if (todos[index].completed) {     
-    //     $(this).parents('.card').addClass('text-muted').css({
-    //     'text-decoration': 'line-through',
-    //     'text-decoration-color': 'white'
-    //     });
-    //     $(this).parents('.card').removeClass('bg-warning bg-info bg-secondary bg-muted').addClass('bg-secondary');
-    // } 
     if(todos[index].completed) {
     $('.card[data-index="' + index + '"]').addClass('text-muted').css({
       'text-decoration': 'line-through',
@@ -417,92 +318,6 @@
     }
     });
 
-    
-    // v3
-    // Función para cargar los to-dos desde localStorage
-    /*function cargarTodos() {
-    // Obtener los to-dos almacenados en localStorage
-    var todos = JSON.parse(localStorage.getItem('todos')) || [];
-
-    // Generar el HTML de las cards con los to-dos
-    var html = '';
-    for (var i = 0; i < todos.length; i++) {
-        var todo = todos[i];
-        var colorFondo = getColorFondo(todo.prioridad);
-        html += '<div class="col">';
-        html += '  <div class="card p-3 ' + colorFondo;
-        if (todo.completed) {
-        html += ' text-muted" style="text-decoration: line-through;';
-        } else {
-        html += '"';
-        }
-        html += ' data-index="' + i + '">';
-        html += '    <div class="card-body">';
-        html += '      <h5 class="card-title text-primary-emphasis">' + todo.titulo + '</h5>';
-        html += '      <p class="card-text text-secondary-emphasis ">' + todo.descripcion + '</p>';
-        html += '      <p class="card-text"><small class="' + (todo.prioridad == "muy-alta" ? "text-white" : "text-dark") + '">' + todo.fecha + '</small></p>';
-        html += '      <button type="button" class="btn btn-secondary border-white completado">' + (todo.completed ? 'Desmarcar completado' : 'Marcar como completado') + '</button>';
-        // if(todo.completed) {
-        // html += '      <button type="button" class="btn btn-warning descompletar">Marcar como no completado</button>';
-        // }
-        html += '      <button type="button" class="btn btn-danger eliminar">Eliminar</button>';
-        html += '    </div>';
-        html += '  </div>';
-        html += '</div>';
-    }
-
-    // Insertar el HTML generado en el contenedor correspondiente
-    $('#todos-container').html(html);
-
-    // Escuchar el evento click del botón "Completado"
-    $('.completado').click(function() {
-        // Obtener el índice del to-do correspondiente
-        var index = $(this).parents('.card').data('index');
-
-        // Marcar como completado o no completado el to-do correspondiente en localStorage
-        console.log(todos[index])
-        todos[index].completed = !todos[index].completed;
-        console.log(todos[index])
-        console.log(todos)
-        localStorage.setItem('todos', JSON.stringify(todos));
-
-        // Actualizar la card en la interfaz
-        if (todos[index].completed) {
-        $(this).parents('.card').addClass('text-muted').css({
-            'text-decoration': 'line-through',
-            'text-decoration-color': 'white'
-        });
-        $(this).parents('.card').removeClass('bg-warning bg-info bg-secondary bg-muted').addClass('bg-secondary');
-        } else {
-        $(this).parents('.card').removeClass('text-muted').css({
-            'text-decoration': 'none',
-            'text-decoration-color': 'unset'
-        });
-        $(this).parents('.card').removeClass('bg-danger bg-warning bg-info bg-secondary bg-muted bg-secondary');
-        var prioridad = todos[index].prioridad;
-        switch (prioridad) {
-            case 'muy alta':
-            $(this).parents('.card').addClass('bg-danger');
-            break;
-            case 'alta':
-            $(this).parents('.card').addClass('bg-warning');
-            break;
-            case 'normal':
-            $(this).parents('.card').addClass('bg-info');
-            break;
-            case 'baja':
-            $(this).parents('.card').addClass('bg-secondary');
-            break;
-            case 'meh':
-            $(this).parents('.card').addClass('bg-muted');
-            break;
-            default:
-            break;
-            }
-        }
-        });
-        }
-        */
     </script>
   
 </body>
